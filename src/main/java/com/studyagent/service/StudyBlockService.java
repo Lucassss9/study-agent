@@ -10,6 +10,7 @@ import java.util.Optional;
 
 @Service()
 public class StudyBlockService {
+
     @Autowired
     private StudyBlockRepository blockRepository;
 
@@ -21,5 +22,20 @@ public class StudyBlockService {
 
     public final StudyBlock salvar(StudyBlock studyBlock) {
         return blockRepository.save(studyBlock);
+    }
+
+    public StudyBlock atualizar(Long id, StudyBlock dataNew) {
+        StudyBlock blocoExistente = buscarPorId(id);
+
+        blocoExistente.setName(dataNew.getName());
+        blocoExistente.setSubject(dataNew.getSubject());
+
+        return blockRepository.save(blocoExistente);
+    }
+
+    public void delete(Long id) {
+        StudyBlock blocoExistente = buscarPorId(id);
+
+        blockRepository.delete(buscarPorId(id));
     }
 }

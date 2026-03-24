@@ -19,13 +19,14 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Content {
+
     @ManyToOne()
     @JoinColumn(name = "block_id")
     private StudyBlock studyBlock;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     @Column(nullable = false, length = 50)
     private String title;
     @DateTimeFormat
