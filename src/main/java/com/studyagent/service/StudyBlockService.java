@@ -3,16 +3,16 @@ package com.studyagent.service;
 import com.studyagent.exception.EntityNotFoundException;
 import com.studyagent.model.StudyBlock;
 import com.studyagent.repository.StudyBlockRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
-@Service()
+@Service
+@RequiredArgsConstructor
 public class StudyBlockService {
 
-    @Autowired
-    private StudyBlockRepository blockRepository;
+    private final StudyBlockRepository blockRepository;
 
     public final StudyBlock buscarPorId(Long id) {
         Optional<StudyBlock> studyBlock = blockRepository.findById(id);
@@ -36,6 +36,6 @@ public class StudyBlockService {
     public void delete(Long id) {
         StudyBlock blocoExistente = buscarPorId(id);
 
-        blockRepository.delete(buscarPorId(id));
+        blockRepository.delete(blocoExistente);
     }
 }
