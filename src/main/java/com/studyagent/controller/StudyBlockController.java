@@ -2,7 +2,6 @@ package com.studyagent.controller;
 
 import com.studyagent.model.StudyBlock;
 import com.studyagent.service.StudyBlockService;
-import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
