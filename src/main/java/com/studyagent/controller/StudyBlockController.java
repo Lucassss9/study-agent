@@ -1,7 +1,9 @@
 package com.studyagent.controller;
 
-import com.studyagent.model.StudyBlock;
+import com.studyagent.dto.StudyBlockRequestDTO;
+import com.studyagent.dto.StudyBlockResponseDTO;
 import com.studyagent.service.StudyBlockService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,29 +17,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/v1/study-blocks")
+@RequiredArgsConstructor
 public class StudyBlockController {
 
     private StudyBlockService studyBlockService;
 
-    public StudyBlockController(StudyBlockService studyBlockService) {
-        this.studyBlockService = studyBlockService;
-    }
-
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public StudyBlock getStudyBlocks(@PathVariable Long id) {
+    public StudyBlockResponseDTO getStudyBlocks(@PathVariable Long id) {
         return studyBlockService.buscarPorId(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StudyBlock salvarConteudo(@RequestBody StudyBlock block) {
+    public StudyBlockResponseDTO salvarConteudo(@RequestBody StudyBlockRequestDTO block) {
         return studyBlockService.salvar(block);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public StudyBlock atualizarConteudo(@PathVariable Long id, @RequestBody StudyBlock dataNew) {
+    public StudyBlockResponseDTO atualizarConteudo(@PathVariable Long id, @RequestBody StudyBlockRequestDTO dataNew) {
         return studyBlockService.atualizar(id, dataNew);
     }
 

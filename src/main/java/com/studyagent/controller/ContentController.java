@@ -1,5 +1,7 @@
 package com.studyagent.controller;
 
+import com.studyagent.dto.ContentRequestDTO;
+import com.studyagent.dto.ContentResponseDTO;
 import com.studyagent.model.Content;
 import com.studyagent.service.ContentService;
 import org.springframework.http.HttpStatus;
@@ -25,19 +27,19 @@ public class ContentController {
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public Content buscarPorId(@PathVariable Long id) {
+    public ContentResponseDTO buscarPorId(@PathVariable Long id) {
         return contentService.buscarPorId(id);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Content salvarConteudo(@PathVariable Long blockId, @RequestBody Content content) {
+    public ContentResponseDTO salvarConteudo(@PathVariable Long blockId, @RequestBody ContentRequestDTO content) {
         return contentService.salvar(content, blockId);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public Content atualizarConteudo(@PathVariable Long id, @RequestBody Content dataNew) {
+    public ContentResponseDTO atualizarConteudo(@PathVariable Long id, @RequestBody ContentRequestDTO dataNew) {
         return contentService.atualizar(id, dataNew);
     }
 

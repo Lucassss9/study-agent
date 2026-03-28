@@ -1,14 +1,16 @@
 package com.studyagent.dto;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-@Setter
+import java.time.LocalDateTime;
+
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 public class ContentRequestDTO {
 
     private String title;
-    private String dateTime;
+    private LocalDateTime dateTime;
 }

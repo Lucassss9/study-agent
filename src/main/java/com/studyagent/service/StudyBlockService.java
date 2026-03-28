@@ -1,12 +1,12 @@
 package com.studyagent.service;
 
+import com.studyagent.dto.StudyBlockRequestDTO;
+import com.studyagent.dto.StudyBlockResponseDTO;
 import com.studyagent.exception.EntityNotFoundException;
 import com.studyagent.model.StudyBlock;
 import com.studyagent.repository.StudyBlockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -14,28 +14,36 @@ public class StudyBlockService {
 
     private final StudyBlockRepository blockRepository;
 
-    public final StudyBlock buscarPorId(Long id) {
-        Optional<StudyBlock> studyBlock = blockRepository.findById(id);
-
-        return studyBlock.orElseThrow(() -> new EntityNotFoundException("Id não existe"));
+    protected StudyBlock buscarEntidadePorId(Long id) {
+        return blockRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Id não existe"));
     }
 
-    public final StudyBlock salvar(StudyBlock studyBlock) {
-        return blockRepository.save(studyBlock);
+    public StudyBlockResponseDTO buscarPorId(Long id) {
+        StudyBlock block = buscarEntidadePorId(id);
+        return new StudyBlockResponseDTO(block.getId(), block.getName(), block.getSubject());
     }
 
-    public StudyBlock atualizar(Long id, StudyBlock dataNew) {
-        StudyBlock blocoExistente = buscarPorId(id);
+    public StudyBlockResponseDTO salvar(StudyBlockRequestDTO dto) {
+        StudyBlock block = new StudyBlock();
+        block.setName(dto.getName());
+        block.setSubject(dto.getSubject());
+        StudyBlock salvo = blockRepository.save(block);
 
-        blocoExistente.setName(dataNew.getName());
-        blocoExistente.setSubject(dataNew.getSubject());
+        return new StudyBlockResponseDTO(salvo.getId(), salvo.getName(), salvo.getSubject());
+    }
 
-        return blockRepository.save(blocoExistente);
+    public StudyBlockResponseDTO atualizar(Long id, StudyBlockRequestDTO dto) {
+        StudyBlock blocoExistente = buscarEntidadePorId(id);
+        blocoExistente.setName(dto.getName());
+        blocoExistente.setSubject(dto.getSubject());
+        StudyBlock salvo = blockRepository.save(blocoExistente);
+
+        return new StudyBlockResponseDTO(salvo.getId(), salvo.getName(), salvo.getSubject());
     }
 
     public void delete(Long id) {
-        StudyBlock blocoExistente = buscarPorId(id);
-
+        StudyBlock blocoExistente = buscarEntidadePorId(id);
         blockRepository.delete(blocoExistente);
     }
 }
