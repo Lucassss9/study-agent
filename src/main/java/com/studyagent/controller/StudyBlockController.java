@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class StudyBlockController {
 
-    private StudyBlockService studyBlockService;
+    private final StudyBlockService studyBlockService;
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

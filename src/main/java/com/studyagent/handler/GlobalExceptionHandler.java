@@ -1,6 +1,5 @@
 package com.studyagent.handler;
 
-import com.studyagent.StudyAgentApplication;
 import com.studyagent.exception.DataValidationException;
 import com.studyagent.exception.EntityNotFoundException;
 import com.studyagent.exception.StudyAgentException;
@@ -29,6 +28,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occurred: " + ex.getMessage());
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
     }
 }

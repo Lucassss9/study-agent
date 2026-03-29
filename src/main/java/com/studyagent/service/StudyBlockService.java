@@ -2,6 +2,7 @@ package com.studyagent.service;
 
 import com.studyagent.dto.StudyBlockRequestDTO;
 import com.studyagent.dto.StudyBlockResponseDTO;
+import com.studyagent.exception.DataValidationException;
 import com.studyagent.exception.EntityNotFoundException;
 import com.studyagent.model.StudyBlock;
 import com.studyagent.repository.StudyBlockRepository;
@@ -26,6 +27,11 @@ public class StudyBlockService {
 
     public StudyBlockResponseDTO salvar(StudyBlockRequestDTO dto) {
         StudyBlock block = new StudyBlock();
+
+        if (dto.getName() == null || dto.getName().isBlank()) {
+            throw new DataValidationException("O nome do bloco de estudo não pode ser vazio.");
+        }
+
         block.setName(dto.getName());
         block.setSubject(dto.getSubject());
         StudyBlock salvo = blockRepository.save(block);
@@ -35,6 +41,11 @@ public class StudyBlockService {
 
     public StudyBlockResponseDTO atualizar(Long id, StudyBlockRequestDTO dto) {
         StudyBlock blocoExistente = buscarEntidadePorId(id);
+
+        if (dto.getName() == null || dto.getName().isBlank()) {
+            throw new DataValidationException("O nome do bloco de estudo não pode ser vazio.");
+        }
+
         blocoExistente.setName(dto.getName());
         blocoExistente.setSubject(dto.getSubject());
         StudyBlock salvo = blockRepository.save(blocoExistente);
