@@ -8,7 +8,7 @@ O sistema permite criar **blocos de estudo** (ex: "Matemática - Cálculo") e vi
 
 ## 🛠️ Tecnologias
 
-- Java 17
+- Java 21
 - Spring Boot
 - Spring Data JPA
 - PostgreSQL
