@@ -2,12 +2,12 @@ package com.studyagent.service;
 
 import com.studyagent.dto.StudyBlockRequestDTO;
 import com.studyagent.dto.StudyBlockResponseDTO;
-import com.studyagent.exception.DataValidationException;
 import com.studyagent.exception.EntityNotFoundException;
 import com.studyagent.model.StudyBlock;
 import com.studyagent.repository.StudyBlockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -17,13 +17,19 @@ public class StudyBlockService {
 
     private final StudyBlockRepository blockRepository;
 
-    public List<StudyBlock> listarTodos(){
-        return blockRepository.findAll();
+    public List<StudyBlockResponseDTO> listarTodos(){
+        return blockRepository.findAll()
+                .stream()
+                .map(block -> new StudyBlockResponseDTO(
+                        block.getId(),
+                        block.getName(),
+                        block.getSubject()))
+                .toList();
     }
 
     protected StudyBlock buscarEntidadePorId(Long id) {
         return blockRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Id não existe"));
+                .orElseThrow(() -> new EntityNotFoundException("Bloco com id " + id + " não encontrado"));
     }
 
     public StudyBlockResponseDTO buscarPorId(Long id) {
@@ -31,13 +37,9 @@ public class StudyBlockService {
         return new StudyBlockResponseDTO(block.getId(), block.getName(), block.getSubject());
     }
 
+    @Transactional
     public StudyBlockResponseDTO salvar(StudyBlockRequestDTO dto) {
         StudyBlock block = new StudyBlock();
-
-        if (dto.getName() == null || dto.getName().isBlank()) {
-            throw new DataValidationException("O nome do bloco de estudo não pode ser vazio.");
-        }
-
         block.setName(dto.getName());
         block.setSubject(dto.getSubject());
         StudyBlock salvo = blockRepository.save(block);
@@ -45,13 +47,9 @@ public class StudyBlockService {
         return new StudyBlockResponseDTO(salvo.getId(), salvo.getName(), salvo.getSubject());
     }
 
+    @Transactional
     public StudyBlockResponseDTO atualizar(Long id, StudyBlockRequestDTO dto) {
         StudyBlock blocoExistente = buscarEntidadePorId(id);
-
-        if (dto.getName() == null || dto.getName().isBlank()) {
-            throw new DataValidationException("O nome do bloco de estudo não pode ser vazio.");
-        }
-
         blocoExistente.setName(dto.getName());
         blocoExistente.setSubject(dto.getSubject());
         StudyBlock salvo = blockRepository.save(blocoExistente);
@@ -59,6 +57,7 @@ public class StudyBlockService {
         return new StudyBlockResponseDTO(salvo.getId(), salvo.getName(), salvo.getSubject());
     }
 
+    @Transactional
     public void delete(Long id) {
         StudyBlock blocoExistente = buscarEntidadePorId(id);
         blockRepository.delete(blocoExistente);

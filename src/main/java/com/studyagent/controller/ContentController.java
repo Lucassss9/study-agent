@@ -4,6 +4,8 @@ import com.studyagent.dto.ContentRequestDTO;
 import com.studyagent.dto.ContentResponseDTO;
 import com.studyagent.model.Content;
 import com.studyagent.service.ContentService;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,13 +21,10 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/v1/study-blocks/{blockId}/contents")
+@RequiredArgsConstructor
 public class ContentController {
 
     private final ContentService contentService;
-
-    public ContentController(ContentService contentService) {
-        this.contentService = contentService;
-    }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
@@ -35,19 +34,19 @@ public class ContentController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Content> listarTodos() {
-        return contentService.listarTodos();
+    public List<ContentResponseDTO> listarTodos(@PathVariable Long blockId) {
+        return contentService.listarPorBlock(blockId);
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ContentResponseDTO salvarConteudo(@PathVariable Long blockId, @RequestBody ContentRequestDTO content) {
+    public ContentResponseDTO salvarConteudo(@PathVariable Long blockId, @Valid @RequestBody ContentRequestDTO content) {
         return contentService.salvar(content, blockId);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public ContentResponseDTO atualizarConteudo(@PathVariable Long id, @RequestBody ContentRequestDTO dataNew) {
+    public ContentResponseDTO atualizarConteudo(@PathVariable Long id, @Valid @RequestBody ContentRequestDTO dataNew) {
         return contentService.atualizar(id, dataNew);
     }
 

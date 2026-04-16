@@ -4,6 +4,7 @@ import com.studyagent.dto.StudyBlockRequestDTO;
 import com.studyagent.dto.StudyBlockResponseDTO;
 import com.studyagent.model.StudyBlock;
 import com.studyagent.service.StudyBlockService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,19 +34,19 @@ public class StudyBlockController {
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<StudyBlock> listarTodos() {
+    public List<StudyBlockResponseDTO> listarTodos() {
         return studyBlockService.listarTodos();
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public StudyBlockResponseDTO salvarConteudo(@RequestBody StudyBlockRequestDTO block) {
+    public StudyBlockResponseDTO salvarConteudo(@Valid @RequestBody StudyBlockRequestDTO block) {
         return studyBlockService.salvar(block);
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
-    public StudyBlockResponseDTO atualizarConteudo(@PathVariable Long id, @RequestBody StudyBlockRequestDTO dataNew) {
+    @ResponseStatus(HttpStatus.OK)
+    public StudyBlockResponseDTO atualizarConteudo(@PathVariable Long id, @Valid @RequestBody StudyBlockRequestDTO dataNew) {
         return studyBlockService.atualizar(id, dataNew);
     }
 
