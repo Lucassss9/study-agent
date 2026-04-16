@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +21,10 @@ public class ContentService {
 
     private final ContentRepository contentRepository;
     private final StudyBlockService blockService;
+
+    public List<Content> listarTodos() {
+        return contentRepository.findAll();
+    }
 
     private Content buscarEntidadePorId(Long id) {
         return contentRepository.findById(id)

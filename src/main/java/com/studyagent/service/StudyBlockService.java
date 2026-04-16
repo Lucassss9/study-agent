@@ -9,11 +9,17 @@ import com.studyagent.repository.StudyBlockRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class StudyBlockService {
 
     private final StudyBlockRepository blockRepository;
+
+    public List<StudyBlock> listarTodos(){
+        return blockRepository.findAll();
+    }
 
     protected StudyBlock buscarEntidadePorId(Long id) {
         return blockRepository.findById(id)
