@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/study-blocks/{blockId}/contents")
 public class ContentController {
@@ -31,6 +33,12 @@ public class ContentController {
         return contentService.buscarPorId(id);
     }
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Content> listarTodos() {
+        return contentService.listarTodos();
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public ContentResponseDTO salvarConteudo(@PathVariable Long blockId, @RequestBody ContentRequestDTO content) {
@@ -38,7 +46,7 @@ public class ContentController {
     }
 
     @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.ACCEPTED)
+    @ResponseStatus(HttpStatus.OK)
     public ContentResponseDTO atualizarConteudo(@PathVariable Long id, @RequestBody ContentRequestDTO dataNew) {
         return contentService.atualizar(id, dataNew);
     }

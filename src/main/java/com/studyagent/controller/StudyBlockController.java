@@ -2,6 +2,7 @@ package com.studyagent.controller;
 
 import com.studyagent.dto.StudyBlockRequestDTO;
 import com.studyagent.dto.StudyBlockResponseDTO;
+import com.studyagent.model.StudyBlock;
 import com.studyagent.service.StudyBlockService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/v1/study-blocks")
 @RequiredArgsConstructor
@@ -26,6 +29,12 @@ public class StudyBlockController {
     @ResponseStatus(HttpStatus.OK)
     public StudyBlockResponseDTO getStudyBlocks(@PathVariable Long id) {
         return studyBlockService.buscarPorId(id);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<StudyBlock> listarTodos() {
+        return studyBlockService.listarTodos();
     }
 
     @PostMapping
