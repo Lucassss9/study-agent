@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ContentRepository extends JpaRepository<Content, Long> {
 
-    public List<Content> findByStudyBlockId(Long blockId);
+    List<Content> findByStudyBlockId(Long blockId);
 }
