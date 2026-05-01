@@ -17,6 +17,13 @@ public class StudyBlockService {
 
     private final StudyBlockRepository blockRepository;
 
+    @Transactional(readOnly = true)
+    public StudyBlock getReferenceById(Long id) {
+        var reference = blockRepository.getReferenceById(id);
+        return reference;
+    }
+
+    @Transactional(readOnly = true)
     public List<StudyBlockResponseDTO> listarTodos(){
         return blockRepository.findAll()
                 .stream()
@@ -27,11 +34,12 @@ public class StudyBlockService {
                 .toList();
     }
 
-    protected StudyBlock buscarEntidadePorId(Long id) {
+    private StudyBlock buscarEntidadePorId(Long id) {
         return blockRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Bloco com id " + id + " não encontrado"));
     }
 
+    @Transactional(readOnly = true)
     public StudyBlockResponseDTO buscarPorId(Long id) {
         StudyBlock block = buscarEntidadePorId(id);
         return new StudyBlockResponseDTO(block.getId(), block.getName(), block.getSubject());
