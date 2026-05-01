@@ -20,15 +20,15 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class Content {
 
-    @ManyToOne()
-    @JoinColumn(name = "block_id")
-    private StudyBlock studyBlock;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column(nullable = false, length = 50)
     private String title;
-    @DateTimeFormat
     private LocalDateTime dateTime;
+
+    @ManyToOne()
+    @JoinColumn(name = "block_id")
+    private StudyBlock studyBlock;
+
 }

@@ -2,7 +2,6 @@ package com.studyagent.controller;
 
 import com.studyagent.dto.ContentRequestDTO;
 import com.studyagent.dto.ContentResponseDTO;
-import com.studyagent.model.Content;
 import com.studyagent.service.ContentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

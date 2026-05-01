@@ -2,7 +2,6 @@ package com.studyagent.controller;
 
 import com.studyagent.dto.StudyBlockRequestDTO;
 import com.studyagent.dto.StudyBlockResponseDTO;
-import com.studyagent.model.StudyBlock;
 import com.studyagent.service.StudyBlockService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

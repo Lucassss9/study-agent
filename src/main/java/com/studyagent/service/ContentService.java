@@ -20,6 +20,7 @@ public class ContentService {
     private final ContentRepository contentRepository;
     private final StudyBlockService blockService;
 
+    @Transactional(readOnly = true)
     public List<ContentResponseDTO> listarPorBlock(Long blockId) {
         return contentRepository.findByStudyBlockId(blockId)
                 .stream()
@@ -36,6 +37,7 @@ public class ContentService {
                 .orElseThrow(() -> new EntityNotFoundException("Conteudo com id " + id + " não encontrado"));
     }
 
+    @Transactional(readOnly = true)
     public ContentResponseDTO buscarPorId(Long id) {
         Content content = buscarEntidadePorId(id);
         return new ContentResponseDTO(content.getId(), content.getTitle(), content.getDateTime());
@@ -43,7 +45,7 @@ public class ContentService {
 
     @Transactional
     public ContentResponseDTO salvar(ContentRequestDTO contentResquest, Long blockId) {
-        StudyBlock block = blockService.buscarEntidadePorId(blockId);
+        StudyBlock block = blockService.getReferenceById(blockId);
         Content content = new Content();
         content.setTitle(contentResquest.getTitle());
         content.setDateTime(LocalDateTime.now());
